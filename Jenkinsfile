@@ -1,20 +1,25 @@
 pipeline {
     agent any
 
+    tools {
+        // Use the configured Node.js version, replace "nodejs_16" with the name you gave in Jenkins tool configuration
+        nodejs 'nodejs_16'
+    }
+
     stages {
         stage('Setup') {
             steps {
                 script {
-                    // Update package list and install npm if not installed
-                    sh 'sudo apt update && sudo apt install -y npm'
-                    sh 'node -v && npm -v'
+                    // Verify Node and NPM versions
+                    sh 'node -v'
+                    sh 'npm -v'
                 }
             }
         }
         stage('Install Dependencies') {
             steps {
                 script {
-                    // Use npm ci for a clean install
+                    // Install dependencies using npm ci
                     sh 'npm ci'
                 }
             }
