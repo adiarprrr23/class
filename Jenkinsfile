@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     // Install dependencies
-                    sh "apt install npm"
+                    sh "sudo apt install npm"
                     sh 'npm install'
                 }
             }
