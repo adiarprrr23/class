@@ -2,12 +2,20 @@ pipeline {
     agent any
 
     stages {
+        stage('Setup') {
+            steps {
+                script {
+                    // Update package list and install npm if not installed
+                    sh 'sudo apt update && sudo apt install -y npm'
+                    sh 'node -v && npm -v'
+                }
+            }
+        }
         stage('Install Dependencies') {
             steps {
                 script {
-                    // Install dependencies
-                    sh "sudo apt install npm"
-                    sh 'npm install'
+                    // Use npm ci for a clean install
+                    sh 'npm ci'
                 }
             }
         }
