@@ -60,7 +60,7 @@ pipeline {
                     sh "echo qwerty123@@ | docker login -u suarim --password-stdin"
 
                     // Push the Docker image to the repository
-                    sh "docker push ${imageName}:${imageTag}"
+                    sh "docker push suarim/${imageName}:${imageTag}"
                 }
             }
         }
