@@ -16,6 +16,7 @@ pipeline {
                 }
             }
         }
+        
         stage('Install Dependencies') {
             steps {
                 script {
@@ -24,6 +25,8 @@ pipeline {
                 }
             }
         }
+
+        // Uncomment if build step is needed
         // stage('Build') {
         //     steps {
         //         script {
@@ -32,6 +35,7 @@ pipeline {
         //         }
         //     }
         // }
+
         stage('Test') {
             steps {
                 script {
@@ -40,43 +44,25 @@ pipeline {
                 }
             }
         }
-stage('docker') {
-    steps {
-        script {
-            // Define the Docker image name and tag
-            def imageName = "your-image-name"
-            def imageTag = "latest"
+        
+        stage('Docker') {
+            steps {
+                script {
+                    // Define the Docker image name and tag
+                    def imageName = "your-image-name"
+                    def imageTag = "latest"
 
-            // Build the Docker image
-            sh "docker build -t ${imageName}:${imageTag} ."
-            sh "echo docker build success"
+                    // Build the Docker image
+                    sh "docker build -t ${imageName}:${imageTag} ."
+                    sh "echo docker build success"
 
-            stage('docker') {
-    steps {
-        script {
-            // Define the Docker image name and tag
-            def imageName = "your-image-name"
-            def imageTag = "latest"
+                    // Log in to Docker Hub or another registry
+                    sh "echo qwerty123@@ | docker login -u suarim --password-stdin"
 
-            // Build the Docker image
-            sh "docker build -t ${imageName}:${imageTag} ."
-
-            // Optionally, log in to Docker Hub or another registry
-            // withCredentials([usernamePassword(credentialsId: 'docker-credentials-id', 
-            //                                   usernameVariable: 'suarim', 
-            //                                   passwordVariable: 'qwerty123@@')]) {
-            sh "echo qwerty123@@ | docker login -u suarim --password-stdin"
-            // }
-
-            // Push the Docker image to the repository
-            sh "docker push ${imageName}:${imageTag}"
+                    // Push the Docker image to the repository
+                    sh "docker push ${imageName}:${imageTag}"
+                }
+            }
         }
     }
-}
-
-        }
-    }
-}
-
-}
 }
