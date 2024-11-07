@@ -50,7 +50,30 @@ stage('docker') {
             // Build the Docker image
             sh "docker build -t ${imageName}:${imageTag} ."
             sh "echo docker build success"
-          
+
+            stage('docker') {
+    steps {
+        script {
+            // Define the Docker image name and tag
+            def imageName = "your-image-name"
+            def imageTag = "latest"
+
+            // Build the Docker image
+            sh "docker build -t ${imageName}:${imageTag} ."
+
+            // Optionally, log in to Docker Hub or another registry
+            // withCredentials([usernamePassword(credentialsId: 'docker-credentials-id', 
+            //                                   usernameVariable: 'suarim', 
+            //                                   passwordVariable: 'qwerty123@@')]) {
+            sh "echo qwerty123@@ | docker login -u suarim --password-stdin"
+            // }
+
+            // Push the Docker image to the repository
+            sh "docker push ${imageName}:${imageTag}"
+        }
+    }
+}
+
         }
     }
 }
