@@ -53,14 +53,14 @@ pipeline {
                     def imageTag = "latest"
 
                     // Build the Docker image
-                    sh "docker build -t ${imageName}:${imageTag} ."
+                    sh "docker build -t suarim/${imageName}:${imageTag} ."
                     sh "echo docker build success"
 
                     // Log in to Docker Hub or another registry
                     sh "echo qwerty123@@ | docker login -u suarim --password-stdin"
 
                     // Push the Docker image to the repository
-                    sh "docker push library/${imageName}:${imageTag}"
+                    sh "docker push suarim/${imageName}:${imageTag}"
                 }
             }
         }
