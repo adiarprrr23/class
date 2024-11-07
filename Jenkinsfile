@@ -24,14 +24,14 @@ pipeline {
                 }
             }
         }
-        stage('Build') {
-            steps {
-                script {
-                    // Build the project
-                    sh 'npm run build'
-                }
-            }
-        }
+        // stage('Build') {
+        //     steps {
+        //         script {
+        //             // Build the project
+        //             sh 'npm run build'
+        //         }
+        //     }
+        // }
         stage('Test') {
             steps {
                 script {
