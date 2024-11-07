@@ -64,5 +64,10 @@ pipeline {
                 }
             }
         }
+        stage('container'){
+            steps{
+                script{
+                    sh 'docker run -d -p 3000:3000 suarim/your-image-name:latest'
+                    
     }
 }
