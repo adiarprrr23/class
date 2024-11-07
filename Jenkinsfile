@@ -40,5 +40,19 @@ pipeline {
                 }
             }
         }
+stage('docker') {
+    steps {
+        script {
+            // Define the Docker image name and tag
+            def imageName = "your-image-name"
+            def imageTag = "latest"
+
+            // Build the Docker image
+            sh "docker build -t ${imageName}:${imageTag} ."
+            sh "echo docker build success"
+          
+        }
     }
+}
+
 }
