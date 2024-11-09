@@ -18,7 +18,6 @@ pipeline {
                     npm run build
                 '''
                 }
-            }
         }
     }
 }
