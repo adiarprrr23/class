@@ -6,14 +6,15 @@ pipeline {
             agent {
                 docker {
                     image 'node:18-alpine'
-                    reuseNode true
+                    volumes {
+                        hostPath volume: '/var/lib/jenkins/workspace/App', containerPath: '/app'
+                    }
                 }
             }
             steps {
                 script {
                     try {
-                        sh 'npm ci --cache'
-                        sh 'npm run build'
+                        sh 'cd /app && npm ci --cache && npm run build'
                     } catch (Exception e) {
                         error "Build failed: ${e.message}"
                     }
