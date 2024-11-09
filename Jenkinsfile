@@ -5,18 +5,19 @@ pipeline {
         stage('Build') {
             agent {
                 docker {
-                    image "node:18-alpine"
+                    image 'node:18-alpine'
                     reuseNode true
                 }
             }
             steps {
-                sh '''
-                    ls -la
-                    node --version
-                    npm --version
-                    npm ci
-                    npm run build
-                '''
+                script {
+                    try {
+                        sh 'npm ci --cache'
+                        sh 'npm run build'
+                    } catch (Exception e) {
+                        error "Build failed: ${e.message}"
+                    }
+                }
             }
         }
     }
