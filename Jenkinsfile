@@ -20,16 +20,16 @@ pipeline {
                 }
             }
         }
-        // stage('Container') {
-        //       steps{
-        //           script{
-        //              sh '''
-        //              docker build -t adiarprrr23/new:latest .
-        //              docker run -d -p 3000:3000 adiarprrr23/new
-        //              '''
-        //           }
-        //       }  
-        // }
+        stage('Container') {
+              steps{
+                  script{
+                     sh '''
+                     docker build -t adiarprrr23/new:latest .
+                     docker run -d -p 3000:3000 adiarprrr23/new
+                     '''
+                  }
+              }  
+        }
     }
 }
 
