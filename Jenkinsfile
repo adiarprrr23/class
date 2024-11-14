@@ -23,10 +23,12 @@ pipeline {
         stage('Container') {
               steps{
                   script{
+                     sh 'echo docker start'
                      sh '''
                      docker build -t adiarprrr23/new:latest .
                      docker run -d -p 3000:3000 adiarprrr23/new
                      '''
+                     sh 'echo docker end'
                   }
               }  
         }
