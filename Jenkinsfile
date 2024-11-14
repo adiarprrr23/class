@@ -1,22 +1,22 @@
 pipeline {
     agent { 
-        docker { image 'node:18-alpine' }
+        docker { 
+            image 'node:18-alpine' 
+            args '--user root'
+        }
     }
 
     stages {
         stage('Build') {
             steps {
                 script {
-                    // sh '''
-                    //     echo "Starting build"
-                    //     apk add --no-cache sudo
-                    //     sudo chown -R $(id -u):$(id -g) /var/lib/jenkins/workspace
-                    //     adduser -D builduser
-                    //     chown -R builduser:builduser /var/lib/jenkins/workspace
-                    //     su builduser -c "npm ci && npm run build"
-                    // ''' 
-                    sh "npm i"
-                    sh "npm run build"
+                    sh '''
+                    sudo chown -R $(whoami) ~/.npm
+                    sudo chown -R $(whoami) /var/lib/jenkins/workspace
+                    npm cache clean --force
+                    npm i
+                    npm test
+                    '''
                 }
             }
         }
