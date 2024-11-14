@@ -1,7 +1,7 @@
 pipeline {
     agent { 
         docker { 
-            image 'node:18-alpine' 
+            image 'node:16-alpine' 
             args '--user root'
         }
     }
@@ -11,8 +11,8 @@ pipeline {
             steps {
                 script {
                     sh '''
-                    sudo chown -R $(whoami) ~/.npm
-                    sudo chown -R $(whoami) /var/lib/jenkins/workspace
+                    chown -R $(whoami) ~/.npm
+                    chown -R $(whoami) /var/lib/jenkins/workspace
                     npm cache clean --force
                     npm i
                     npm test
