@@ -10,7 +10,12 @@ pipeline {
             //         image 'node:18-alpine'
             //         reuseNode true
             //     } 
-            sh "echo build"
+            steps {
+                script {
+                    sh "echo build"
+                }
+            }
+            
             }
             steps {
                 script {
