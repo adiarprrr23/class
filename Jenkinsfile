@@ -14,6 +14,8 @@ pipeline {
                     echo "Adjusting permissions and preparing environment"
                     chown -R $(whoami) ~/.npm
                     chown -R $(whoami) /var/lib/jenkins/workspace
+                    chown -R jenkins:jenkins /var/lib/jenkins/workspace/EApp
+                    chmod -R 755 /var/lib/jenkins/workspace/EApp
                     '''
                 }
             }
