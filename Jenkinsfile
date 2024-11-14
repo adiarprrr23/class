@@ -1,13 +1,16 @@
 pipeline {
-    agent any
+    agent { 
+        docker { image 'node:18-alpine' }
+    }
 
     stages {
         stage('Build') {
-            agent {
-                docker {
-                    image 'node:18-alpine'
-                    reuseNode true
-                }
+            // agent {
+            //     docker {
+            //         image 'node:18-alpine'
+            //         reuseNode true
+            //     } 
+            sh "echo build"
             }
             steps {
                 script {
