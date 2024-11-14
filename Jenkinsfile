@@ -10,6 +10,7 @@ pipeline {
                 }
             }
             steps {
+                script {
                 sh '''
                     apk add --no-cache sudo
                     sudo chown -R $(id -u):$(id -g) /var/lib/jenkins/workspace
@@ -17,6 +18,7 @@ pipeline {
                     chown -R builduser:builduser /var/lib/jenkins/workspace
                     su builduser -c "npm ci && npm run build"
                 '''
+            }
             }
         }
     }
