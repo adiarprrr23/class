@@ -21,8 +21,8 @@ pipeline {
             }
         }
         stage('Container') {
-              steps{
-                  script{
+              steps {
+                  script {
                      sh 'echo docker start'
                      sh '''
                      docker build -t adiarprrr23/new:latest .
