@@ -2,7 +2,8 @@ pipeline {
     agent { 
         docker { 
             image 'node:16-alpine' 
-            args '--user root' // Ensure this is needed; otherwise, remove for better security
+            args '--user root'
+            reuseNode true
         }
     }
 
