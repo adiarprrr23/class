@@ -2,8 +2,8 @@ pipeline {
     agent { 
         docker { 
             image 'node:16-alpine' 
-            args '--user root'
             reuseNode true
+            args '--user root'
         }
     }
 
@@ -13,10 +13,10 @@ pipeline {
                 script {
                     sh '''
                     echo "Adjusting permissions and preparing environment"
-                    # Adjust permissions on project-specific paths only
-                    chown -R $(whoami) ~/.npm
-                    chown -R jenkins:jenkins /var/lib/jenkins/workspace/EApp@tmp
-                    chmod -R 755 /var/lib/jenkins/workspace/EApp@tmp
+                    # Ensure permissions are set correctly for the current user in the container
+                    chown -R root /root/.npm
+                    chown -R $(whoami) /var/lib/jenkins/workspace
+                    chmod -R 755 /var/lib/jenkins/workspace
                     '''
                 }
             }
@@ -26,7 +26,8 @@ pipeline {
             steps {
                 script {
                     sh '''
-                    echo "Installing dependencies"
+                    echo "Cleaning npm cache and installing dependencies"
+                    npm cache clean --force
                     npm ci
                     '''
                 }
@@ -51,14 +52,20 @@ pipeline {
                     echo "Building Docker container"
                     docker build -t adiarprrr23/new:latest .
 
-                    echo "Stopping any existing container running on port 3000"
-                    docker ps -q --filter "ancestor=adiarprrr23/new:latest" | xargs -r docker stop
-
                     echo "Running Docker container"
                     docker run -d -p 3000:3000 adiarprrr23/new
                     '''
                 }
             }  
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed. Check the error logs.'
         }
     }
 }
