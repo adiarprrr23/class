@@ -27,7 +27,6 @@ pipeline {
                 script {
                     sh '''
                     echo "Cleaning npm cache and installing dependencies"
-                    npm cache clean --force
                     npm ci
                     '''
                 }
